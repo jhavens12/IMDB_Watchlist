@@ -7,8 +7,6 @@ from datetime import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pprint import pprint
-from imdb import IMDb
-ia = IMDb()
 
 timestamp = datetime.now()
 
@@ -19,7 +17,9 @@ client = gspread.authorize(creds)
 sheet = client.open('IMDB_Watchlist').sheet1
 time = datetime.now()
 title = input("Title? ")
+print()
 comment = input("Whats your comment? ")
+print()
 print("1 - Really Looks Good")
 print("2 - Could Be Interesting")
 print("3 - Someone Told Me About It")
@@ -28,6 +28,7 @@ print("5 - Found Online Somewhere")
 print()
 
 rating = input("Rating? ")
+print()
 
 url = sys.argv[1]
 print(url)
