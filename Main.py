@@ -7,6 +7,8 @@ from datetime import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pprint import pprint
+from imdb import IMDb
+ia = IMDb()
 
 timestamp = datetime.now()
 
@@ -15,23 +17,28 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('creds.json', scope)
 client = gspread.authorize(creds)
 
 sheet = client.open('IMDB_Watchlist').sheet1
-
 time = datetime.now()
-
+title = input("Title? ")
 comment = input("Whats your comment? ")
+print("1 - Really Looks Good")
+print("2 - Could Be Interesting")
+print("3 - Someone Told Me About It")
+print("4 - Future Sequel Type")
+print("5 - Found Online Somewhere")
+print()
+
+rating = input("Rating? ")
 
 url = sys.argv[1]
 print(url)
 split_url = url.split('/')
 
-report_line = [timestamp,url,split_url[4],comment]
+movie_id = split_url[4].split('tt')[1]
 
+report_line = [timestamp,title,"imdb:"+split_url[4],rating,comment,url]
 sheet_data = sheet.get_all_values()
-
 row = str(len(sheet_data)+1)
-
-range_build = 'A' + row + ':D' + row
-
+range_build = 'A' + row + ':E' + row
 cell_list = sheet.range(range_build)
 
 # Update values
