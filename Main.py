@@ -7,6 +7,9 @@ from datetime import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pprint import pprint
+#pip3 install git+https://github.com/alberanid/imdbpy
+from imdb import IMDb
+ia = IMDb()
 
 timestamp = datetime.now()
 
@@ -16,7 +19,7 @@ client = gspread.authorize(creds)
 
 sheet = client.open('IMDB_Watchlist').sheet1
 time = datetime.now()
-title = input("Title? ")
+#title = input("Title? ")
 print()
 comment = input("Whats your comment? ")
 print()
@@ -36,10 +39,12 @@ split_url = url.split('/')
 
 movie_id = split_url[4].split('tt')[1]
 
+title = ia.get_movie(movie_id)
+
 report_line = [timestamp,title,"imdb:"+split_url[4],rating,comment,url]
 sheet_data = sheet.get_all_values()
 row = str(len(sheet_data)+1)
-range_build = 'A' + row + ':E' + row
+range_build = 'A' + row + ':F' + row
 cell_list = sheet.range(range_build)
 
 # Update values
