@@ -21,6 +21,7 @@ time = datetime.now()
 comment = input("Whats your comment? ")
 
 url = sys.argv[1]
+print(url)
 split_url = url.split('/')
 
 report_line = [timestamp,url,split_url[4],comment]
@@ -37,5 +38,8 @@ cell_list = sheet.range(range_build)
 for cell,data in zip(cell_list,report_line):
     cell.value = data
 
+print("Updating Sheet...")
+
 # Send update in batch mode
 sheet.update_cells(cell_list)
+print("DONE!")
